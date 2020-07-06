@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDWBduUFTddPV5kDC3dEANEL-C2h60bhZE",
+        authDomain: "snsloginsample-e4c27.firebaseapp.com",
+        databaseURL: "https://snsloginsample-e4c27.firebaseio.com",
+        projectId: "snsloginsample-e4c27",
+        storageBucket: "snsloginsample-e4c27.appspot.com",
+        messagingSenderId: "1093365441395",
+        appId: "1:1093365441395:web:eb678927b68d3ea2e09b06",
+        measurementId: "G-Y4GPBGN8MF"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();   
+    </script>
+
+    <!-- Begin common files -->
+    <link rel="stylesheet" href="../../components/loader.css">
+    <script src="../../components/loader.js"></script>
+    <link rel="stylesheet" href="../../libs/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    
+    <script src="../../libs/Jquery-3.5.1.min.js"></script>
+    <script src="../../libs/bootstrap/bootstrap.min.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/service.js"></script>
+    <script src="../../js/controller.js"></script>
+    <!-- End common files -->
+    <!-- Custom script here -->
+    <script src="../../js/sns-cooperation/twitter.js"></script>
+</head>
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../../index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html">SNS Cooperation</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Twitter integration</li>
+        </ol>
+    </nav>
+    <div class="container" id="main-content">
+    </div>
+</body>
+</html>

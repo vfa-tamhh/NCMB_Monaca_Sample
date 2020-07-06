@@ -1,0 +1,36 @@
+{
+    "name": "monaca-template-minimum",
+    "version": "2.0.7",
+    "displayName": "Monaca Template Minimum",
+    "dependencies": {
+        "cordova-custom-config": "5.1.0",
+        "cordova-plugin-splashscreen": "5.0.2",
+        "cordova-plugin-whitelist": "1.3.3",
+        "monaca-plugin-monaca-core": "3.3.0",
+        "ncmb-push-monaca-plugin": "3.0.8",
+        "cordova-plugin-facebook4": "file:res/custom_plugins/cordova-plugin-facebook4",
+        "cordova-plugin-sign-in-with-apple": "file:res/custom_plugins/cordova-plugin-sign-in-with-apple"
+    },
+    "scripts": {
+        "monaca:preview": "npm run dev",
+        "dev": "browser-sync start -s www/ --watch --port 8080 --ui-port 8081"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-custom-config": {},
+            "monaca-plugin-monaca-core": {},
+            "ncmb-push-monaca-plugin": {},
+            "cordova-plugin-facebook4": {
+                "APP_ID": "544769482873207",
+                "APP_NAME": "demo_login"
+            },
+            "cordova-plugin-sign-in-with-apple": {}
+        }
+    },
+    "devDependencies": {
+        "browser-sync": "^2.26.7",
+        "cordova": "^9.0.0"
+    }
+}

@@ -1,0 +1,21 @@
+$(function(){
+    initialButton(defaultlanguage, data_store[0].operation);
+    closeButton('../data-store/');
+});
+$(document).on('click', '#btn-object-storage', function(){ data_store_object_storage(); });
+$(document).on('click', '#btn-get-object', function(){ data_store_get_object(); });
+$(document).on('click', '#btn-update-object', function(){ data_store_update_object(); });
+$(document).on('click', '#btn-delete-object', function(){ data_store_delete_object(); });
+$(document).on('click', '#btn-pointer', function(){ data_store_pointer(); });
+$(document).on('click', '#btn-relation', function(){ data_store_relation(); });
+$(document).on('click', '#btn-using-basic-search', function(){ data_store_using_basic_search(); });
+$(document).on('click', '#btn-basic-query-operator', function(){ data_store_basic_query_operator(); });
+$(document).on('click', '#btn-query-on-array', function(){ data_store_query_on_array(); });
+$(document).on('click', '#btn-query-for-pointer', function(){ data_store_query_for_pointer(); });
+$(document).on('click', '#btn-query-for-relation', function(){ data_store_query_for_relation(); });
+$(document).on('click', '#btn-query-composition', function(){ data_store_query_composition(); });
+$(document).on('click', '#btn-search-using-the-result-of-subquery', function(){ data_store_search_using_the_result_of_subquery(); });
+$(document).on('click', '#btn-specify-the-number-of-acquisition', function(){ data_store_specify_the_number_of_acquisition(); });
+$(document).on('click', '#btn-specifying-the-acquisition-start-position', function(){ data_store_specifying_the_acquisition_start_position(); });
+$(document).on('click', '#btn-sort-search-results', function(){ data_store_sort_search_results(); });
+$(document).on('click', '#btn-acquisition-of-the-number-of-search-results', function(){ data_store_acquisition_of_the_number_of_search_results(); });
