@@ -723,8 +723,41 @@ function push_rich_push_notification() {
  * Begin SNS Cooperation
  */
 // Facebook 
-function sns_ncmb_facebook_login(fbuserinfo) {
-    alert('FB User Info:' + JSON.stringify(fbuserinfo));
+function sns_ncmb_facebook_login(response) {
+    if (response.status === 'connected') {
+      var auth = response.authResponse; // Facebookの認証レスポンス
+
+      // --mobile backend実装部分--
+
+      // expiresInをセッショントークンを有効期限（残秒）から失効日時に変換
+      var expire_date = new Date(  auth.expiresIn * 1000 + (new Date()).getTime()).toJSON();
+      var date = {__type:"Date", iso:expire_date}; // Date型を保存できる形式に成型
+      // 認証に必要なパラメータをオブジェクトにまとめる
+      var authData = {id:auth.userID,
+                      access_token:auth.accessToken,
+                      expiration_date:date};
+      var user = new ncmb.User();
+      user.signUpWith("facebook", authData) // ユーザの登録
+          .then(function(user){
+            return ncmb.User.loginWith(user); // SNS連携したユーザでログイン
+          })
+          .then(function(user){
+            // ログイン後処理
+            alert("User Info: " + JSON.stringify(user));
+          })
+          .catch(function(err){
+            // エラー処理
+            alert("エラー" + JSON.stringify(err));
+          });
+
+      // --mobile backend実装部分ここまで--
+
+    } else if (response.status === 'not_authorized') {
+      alert(response.status);
+    } else {
+      alert('Please login to facebook!');
+    }
+
 }
 // Apple
 function sns_member_registration_and_authentication() {
@@ -733,9 +766,11 @@ function sns_member_registration_and_authentication() {
     { requestedScopes: [0, 1] },
         function(data){
             // Apple ID認証が成功の場合、mobile backendに会員登録・認証を行う準備します。
-            var authData = {id:data.user,
-                            access_token:data.authorizationCode,
-                            client_id:"com.apple.***"};
+            var authData = {
+                id:data.user,
+                access_token:data.authorizationCode,
+                client_id:apple_property.client_id
+            };
             var user = new ncmb.User();
             user.signUpWith("apple", authData) // 会員登録を行います。
                 .then(function(resUser){
@@ -765,9 +800,11 @@ function sns_link_apple_credentials_to_existing_members() {
             { requestedScopes: [0, 1] },
                 function(data){
                     // Apple ID認証が成功の場合、会員の紐付けを行う準備します。
-                    var authData = {id:data.user,
-                                    access_token:data.authorizationCode,
-                                    client_id:"com.apple.****"};
+                    var authData = {
+                        id:data.user,
+                        access_token:data.authorizationCode,
+                        client_id:apple_property.client_id
+                    };
                     var user = ncmb.User.getCurrentUser();
                     user.linkWith("apple",authData)
                     .then(function(resUser){
@@ -819,27 +856,96 @@ function sns_twitter_login() {
         var secret = result.credential.secret;
         // The signed-in user info.
         var user = result.user;
-        // ...
+        var authData = {
+            id:result.additionalUserInfo.profile.id_str,
+            screen_name: result.additionalUserInfo.profile.screen_name,
+            oauth_consumer_key: twitter_key.oauth_consumer_key,
+            consumer_secret: twitter_key.consumer_secret,
+            oauth_token: token,
+            oauth_token_secret: secret
+        };
+        var user = new ncmb.User();
+        user.signUpWith("twitter", authData) // 会員登録を行います。
+        .then(function(resUser){
+            return ncmb.User.loginWith(resUser); // 登録した会員でログインを実施します
+        })
+        .then(function(user){
+            // ログイン後処理
+            alert("会員認証完了しました。");
+        })
+        .catch(function(err){
+            // エラー処理
+            alert("エラー" + JSON.stringify(err));
+        });
+
     }).catch(function(error) {
-        console.log(error);
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+        alert("エラー" + JSON.stringify(error));
     });
 }
 function sns_twitter_link() {
-    alert("Linked");
+    // 登録済みの会員をログインします
+    ncmb.User.login("userName", "passwrd")
+    .then(function(data){
+        // ログイン後処理
+        var provider = new firebase.auth.TwitterAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            console.log(result);
+            // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+            // You can use these server side with your app's credentials to access the Twitter API.
+            var token = result.credential.accessToken;
+            var secret = result.credential.secret;
+            // The signed-in user info.
+            var user = result.user;
+            var authData = {
+                id:result.additionalUserInfo.profile.id_str,
+                screen_name: result.additionalUserInfo.profile.screen_name,
+                oauth_consumer_key: twitter_key.oauth_consumer_key,
+                consumer_secret: twitter_key.consumer_secret,
+                oauth_token: token,
+                oauth_token_secret: secret
+            };
+            var user = ncmb.User.getCurrentUser();
+            user.linkWith("twitter", authData) // 会員登録を行います。
+            .then(function(resUser){
+                return ncmb.User.loginWith(resUser); // 登録した会員でログインを実施します
+            })
+            .then(function(user){
+                // ログイン後処理
+                alert("会員認証完了しました。");
+            })
+            .catch(function(err){
+                // エラー処理
+                alert("エラー" + JSON.stringify(err));
+            });
+
+        }).catch(function(error) {
+            alert("エラー" + JSON.stringify(error));
+        });
+    })
+    .catch(function(err){
+        // ログインエラー処理
+        alert(JSON.stringify(err));
+    });
 }
 function sns_twitter_unlink() {
-    alert("unLinked");
+    var user = ncmb.User.getCurrentUser();
+    if (user) {
+        user.unLinkWith("twitter")
+        .then(function(resUser){
+            // 成功時の処理
+            alert(JSON.stringify(resUser));
+        }).catch(function(err){
+            // エラー処理
+            alert("エラー" + JSON.stringify(err));
+        });
+    } else {
+        // ログイン中ユーザが存在していません。
+        alert('Please login!');
+    }
 }
 function sns_twitter_logout() {
-    alert("Logout");
+    ncmb.User.logout();
+    alert('Logout successfully!');
 }
 // Google
 function sns_google_login() {
@@ -850,7 +956,26 @@ function sns_google_login() {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        // ...
+
+        console.log(user.uid);
+        var authData = {
+            id:result.additionalUserInfo.profile.id,
+            access_token:token
+        };
+        var user = new ncmb.User();
+        user.signUpWith("google", authData) // 会員登録を行います。
+        .then(function(resUser){
+            return ncmb.User.loginWith(resUser); // 登録した会員でログインを実施します
+        })
+        .then(function(user){
+            // ログイン後処理
+            alert("会員認証完了しました。");
+        })
+        .catch(function(err){
+            // エラー処理
+            alert("エラー" + JSON.stringify(err));
+        });
+        
         }).catch(function(error) {
             console.log(error);
         // Handle Errors here.
@@ -864,13 +989,66 @@ function sns_google_login() {
     });
 }
 function sns_google_link() {
-    alert("Linked");
+    // 登録済みの会員をログインします
+    ncmb.User.login("userName", "passwrd")
+    .then(function(data){
+        // ログイン後処理
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            console.log(result);
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+
+            console.log(user.uid);
+            var authData = {
+                id:result.additionalUserInfo.profile.id,
+                access_token:token
+            };
+            var user = ncmb.User.getCurrentUser();
+            user.linkWith("google", authData) // 会員登録を行います。
+            .then(function(resUser){
+                return ncmb.User.loginWith(resUser); // 登録した会員でログインを実施します
+            })
+            .then(function(user){
+                // ログイン後処理
+                alert("会員認証完了しました。");
+            })
+            .catch(function(err){
+                // エラー処理
+                alert("エラー" + JSON.stringify(err));
+            });
+            
+            }).catch(function(error) {
+                console.log(error);
+                alert("エラー" + JSON.stringify(error));
+        });
+    })
+    .catch(function(err){
+        // ログインエラー処理
+        alert(JSON.stringify(err));
+    });
 }
 function sns_google_unlink() {
-    alert("unLinked");
+    var user = ncmb.User.getCurrentUser();
+    if (user) {
+        user.unLinkWith("google")
+        .then(function(resUser){
+            // 成功時の処理
+            alert(JSON.stringify(resUser));
+        }).catch(function(err){
+            // エラー処理
+            alert("エラー" + JSON.stringify(err));
+        });
+    } else {
+        // ログイン中ユーザが存在していません。
+        alert('Please login!');
+    }
 }
 function sns_google_logout() {
-    alert("Logout");
+    ncmb.User.logout();
+    alert('Logout successfully!');
 }
 /**
  * End SNS Cooperation

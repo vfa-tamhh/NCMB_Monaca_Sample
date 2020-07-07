@@ -1,3 +1,6 @@
+/**
+ * Config languge en/ja
+ */
 const defaultlanguage = "en";
 
 /**
@@ -7,6 +10,21 @@ const ncmbproperty = {
     application_key : "62b9674928b236e1476b5b471c9de897c26b923c04809dc4728e2a9253b30928",
     client_key:"f6bdd696b85d96849f63f128acee08db905984bb2f9a1684834e0aca2c401433"
 };
+
+/**
+ * Your Apple Client ID.
+ */
+const apple_property = {
+    client_id:"com.apple.****"
+}
+
+/**
+ * Your Twitter key :D
+ */
+const twitter_key = {
+    oauth_consumer_key: "I3j88K1GiMe9pTWA4lWY6Z8r2",
+    consumer_secret: "nKupP2FyVV9XTeItBQcw37H4iXUmd2BYl7v4pBpKcB0BvEMqY9"
+}
 
 /**
  * This const config the operation. 
