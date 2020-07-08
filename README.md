@@ -89,7 +89,152 @@ The following **required** functionality is completed:
 
   GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-  ## License
+## Import this project into Monaca console
+
+1. Download this project as zip file:
+
+<img src='/readme_images/00001.png' title='Download as zip' />
+
+2. Import into Monaca console:
+
+- From Monaca console:
+  - Click on Import button.
+
+  <img src='/readme_images/00002.png' title='Import 1' />
+
+  - Click on Upload project package.
+
+  <img src='/readme_images/00003.png' title='Import 2' />
+
+  - Click on Choose a file and choose a zip file has been downloaded above.
+
+  <img src='/readme_images/00004.png' title='Import 3' />
+
+  - Input your project name and your description after that click on import project button.
+
+  <img src='/readme_images/00005.png' title='Import 4' />
+
+## Configuration for your app
+When using this app, you need to config some app key as below:
+
+#### Quick start
+
+1. Go to `js/config.js` Change your `application_key` and `client_key`
+
+```
+const ncmbproperty = {
+    application_key : "YOUR_APPLICATION_KEY",
+    client_key:"YOUR_CLIENT_KEY"
+};
+```
+
+2. Config newest NCMB SDK. `Configure -> JS/CSS Component settings...`
+
+<img src='/readme_images/00006.png' title='Import 4' />
+
+Remove older NCMB SDK and add new NCMB SDK.
+
+<img src='/readme_images/00007.png' title='Import 4' />
+
+<img src='/readme_images/00008.png' title='Import 4' />
+
+### Push Notification
+
+This project support push notification for Android and iOS.
+
+1. Android:
+
+- Config on NCMB console side.
+- Change your file `google-services.json`.
+- Change your android package name.
+
+2. iOS:
+
+- Config on NCMB console side.
+- Change your bundle ID.
+
+### SNS Cooperation
+
+1. Facebook integration: (Android)
+- In this project we follow the guide [Facebook Single Sign-on App](https://docs.monaca.io/en/sampleapp/samples/facebook_sso/) Would you like to refer it before set up as below step.
+- Create your app and get `APP_ID` and `APP_NAME` follow guide at [Facebook develop](https://developers.facebook.com/)
+- Put your `APP_ID` and `APP_NAME` into the plugin:
+  - `Configure -> Cordova plugin settings...` 
+  - Hover your mouse on `Facebook connect` and click on `Configure`
+
+  <img src='/readme_images/00009.png'/>
+
+  - Put your `APP_ID` and `APP_NAME` after that click on `OK`
+
+  <img src='/readme_images/00010.png'/>
+
+- Build app for Android and run it.
+
+2. Apple cooperation: (iOS 13)
+
+- Go to `js/config.js` Change your `client_id`
+
+```
+const apple_property = {
+    client_id:"com.apple.****"
+}
+```
+
+- Config your project on Apple side and NCMB console side.
+
+- Build app for iOS and run it.
+
+3. Twitter integration: (javascript)
+- In this project we follow the guide [Authenticate Using Twitter in JavaScript](https://firebase.google.com/docs/auth/web/twitter-login) Would you like to refer it before set up as below step.
+- Go to `js/config.js` Change your `oauth_consumer_key` and `consumer_secret`
+
+```
+const twitter_key = {
+    oauth_consumer_key: "oauth_consumer_key",
+    consumer_secret: "consumer_secret"
+}
+```
+- Go to `template/sns-cooperation/twitter.html` change your settings:
+
+```
+var firebaseConfig = {
+        apiKey: "apiKey",
+        authDomain: "authDomain",
+        databaseURL: "databaseURL",
+        projectId: "projectId",
+        storageBucket: "storageBucket",
+        messagingSenderId: "messagingSenderId",
+        appId: "appId",
+        measurementId: "measurementId"
+    };
+```
+- Let run your app.
+
+4. Twitter integration: (javascript)
+- In this project we follow the guide [Authenticate Using Google Sign-In with JavaScript](https://firebase.google.com/docs/auth/web/google-signin) Would you like to refer it before set up as below step.
+
+- Go to `template/sns-cooperation/google.html` change your settings:
+
+```
+var firebaseConfig = {
+        apiKey: "apiKey",
+        authDomain: "authDomain",
+        databaseURL: "databaseURL",
+        projectId: "projectId",
+        storageBucket: "storageBucket",
+        messagingSenderId: "messagingSenderId",
+        appId: "appId",
+        measurementId: "measurementId"
+    };
+```
+- Let run your app.
+
+### File store
+
+- Upload `data/file-store/abc.txt` and `data/file-store/mBaaS_image.png` into your mbaas console.
+
+
+## License
 
     Copyright [2020] [Jimmy Huynh]
 
