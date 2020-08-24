@@ -7,6 +7,8 @@ var _UserPassword = 'password';
 // Please change below variable if you need to confirm user by email address.
 var _EmailAddress = 'vfa.tamhh@gmail.com';
 var _Password = 'password';
+// File store
+var img_url = 'https://mbaas.api.nifcloud.com/2013-09-01/applications/vbkBXOzj1RtMaGoh/publicFiles/mBaaS_image.png';
 
 /**
  * Begin quick start
@@ -1238,7 +1240,6 @@ function file_store_get_binary_data_and_display_image() {
 }
 // Content distribution
 function file_store_content_distribution() {
-    var img_url = 'https://mbaas.api.nifcloud.com/2013-09-01/applications/mYyfZrg34S8UPX6B/publicFiles/mBaaS_image.png';
     $('#img-view').html('');
     var html = '';
     html += '<img src="';
