@@ -22,6 +22,6 @@ $(document).on('click', '#btn-confirm-email-user', function(){
 });
 // please change your email address
 $(document).on('click', '#btn-password-reset-user', function(){
-    var email = 'mail@example.com';
-    member_password_reset(email);
+    // var email = 'mail@example.com';
+    member_password_reset();
 });

@@ -7,8 +7,8 @@ const defaultlanguage = "en";
  * This const is your NCMB key
  */
 const ncmbproperty = {
-    application_key : "62b9674928b236e1476b5b471c9de897c26b923c04809dc4728e2a9253b30928",
-    client_key:"f6bdd696b85d96849f63f128acee08db905984bb2f9a1684834e0aca2c401433"
+    application_key : "50069d5f10ad26c88dfee716f0a6692418ce06e97fdacfd66613779a468bd69b",
+    client_key:"21163698bcf740eb4c6112532409a3ccc7fcde8ac4bf6ddcbea8bf21012f592d"
 };
 
 /**
@@ -247,7 +247,9 @@ const data_store = [
         en_name: "Access authority setting",
         template: "access-authority-setting.html",
         operation: [
-            {id: "btn-set-acl-on-the-app-side", ja_name: "アプリ側でACLを設定する", en_name: "Set ACL on the app side"}
+            {id: "btn-set-acl-on-the-app-side", ja_name: "アプリ側でACLを設定する", en_name: "Set ACL on the app side"},
+            {id:"btn-gold-user-access", ja_name:"Gold user access", en_name:"Gold user access"},
+            {id:"btn-other-user-access", ja_name:"Other user access", en_name:"Other user access"}
         ]
     },
 ];

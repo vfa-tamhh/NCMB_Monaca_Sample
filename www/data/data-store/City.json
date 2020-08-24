@@ -1,0 +1,24 @@
+{
+	"results": [
+		{
+			"cityname":"Osaka",
+			"population":1300000
+		},
+		{
+			"cityname":"Sendai",
+			"population":1100000
+		},
+		{
+			"cityname":"Fukuoka",
+			"population":1500000
+		},
+		{
+			"cityname":"Tokyo",
+			"population":2000000
+		},
+		{
+			"cityname":"Sapparo",
+			"population":1100000
+		}
+	]
+}

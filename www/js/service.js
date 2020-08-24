@@ -1,5 +1,12 @@
 // Define global variable
 var ncmb = new NCMB(ncmbproperty.application_key,ncmbproperty.client_key);
+// Define some variable.
+var _UserName = 'Yamada Tarou';
+var _UserPassword = 'password';
+// Member management
+// Please change below variable if you need to confirm user by email address.
+var _EmailAddress = 'vfa.tamhh@gmail.com';
+var _Password = 'password';
 
 /**
  * Begin quick start
@@ -33,8 +40,8 @@ function member_registrationNewUser() {
     //　Userインスタンスの生成
     var user = new ncmb.User();
     // ユーザー名・パスワードを設定
-    user.set("userName", "Yamada Tarou") /* ユーザー名 */
-            .set("password", "password") /* パスワード */
+    user.set("userName", _UserName) /* ユーザー名 */
+            .set("password", _UserPassword) /* パスワード */
             .set("phone_number", "090-1234-5678"); /* 任意フィールドも追加可能 */
     // ユーザーの新規登録処理
     user.signUpByAccount()
@@ -49,7 +56,7 @@ function member_registrationNewUser() {
 }
 function member_login_1() {
     // 1. ユーザー名とパスワードでログイン
-    ncmb.User.login("Yamada Tarou", "password")
+    ncmb.User.login(_UserName, _UserPassword)
         .then(function(data){
         // ログイン後処理
         alert("Response data: " + JSON.stringify(data));
@@ -61,7 +68,7 @@ function member_login_1() {
 }
 function member_login_2() {
     // 2. Userインスタンスでログイン
-    var user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+    var user = new ncmb.User({userName:_UserName, password:_UserPassword});
     ncmb.User.login(user)
         .then(function(data){
         // ログイン後処理
@@ -90,17 +97,23 @@ function member_logout() {
 }
 function member_confirm_email() {
     var currentUser = ncmb.User.getCurrentUser();
-    if (currentUser.isMailAddressConfirmed()) {
-        // メールアドレス確認済み
-        alert('Confirmed email address');
+    console.log(currentUser);
+    if (currentUser) {
+        if (currentUser.isMailAddressConfirmed()) {
+            // メールアドレス確認済み
+            alert('Confirmed email address. Mail Address is: ' + currentUser.mailAddress);
+        } else {
+            // メールアドレス未確認
+            alert('Unconfirmed email address. Please registration your email and check it later.');
+        }
     } else {
-        // メールアドレス未確認
-        alert('Unconfirmed email address');
+        alert('Please login in check confirmation of e-mail address');
     }
 }
-function member_password_reset(email) {
+
+function member_password_reset() {
     var user = new ncmb.User();
-    user.set("mailAddress", email);
+    user.set("mailAddress", _EmailAddress);
     user.requestPasswordReset()
         .then(function(data){
             // 送信後処理
@@ -108,23 +121,24 @@ function member_password_reset(email) {
         })
         .catch(function(err){
         // エラー処理
-            alert('エラー処理');
+            alert('エラー処理' + JSON.stringify(err));
         });
 }
-function member_email_registration(email) {
-    ncmb.User.requestSignUpEmail(email)
+function member_email_registration() {
+    ncmb.User.requestSignUpEmail(_EmailAddress)
          .then(function(data){
             // 送信後処理
-            alert('送信後処理');
+            console.log(data);
+            alert('Registration with email: ' + _EmailAddress + " is successfull. Please check this email and continue the process. Note: please set password is: " + _Password);
          })
          .catch(function(err){
            // エラー処理
-           alert('エラー処理');
+           alert('エラー処理' + JSON.stringify(err));
          });
 }
-function member_login_with_email(email, password) {
+function member_login_with_email() {
     // メールアドレスとパスワードでログイン
-    ncmb.User.loginWithMailAddress(email, password)
+    ncmb.User.loginWithMailAddress(_EmailAddress, _Password)
         .then(function(data){
         // ログイン後処理
         alert("ログイン後処理: " + JSON.stringify(data));
@@ -167,68 +181,72 @@ function member_create_role() {
             alert("非同期処理: " + JSON.stringify(role));
         }
     });
+
+    var goldPlan = new ncmb.Role("goldPlan");
+    goldPlan.save()
+                .then(function(role){
+                // 非同期処理
+                    alert("非同期処理: " + JSON.stringify(role));
+                })
+                .catch(function(err){
+                //　エラー処理
+                    alert("エラー処理: " + JSON.stringify(err));
+                });
 }
 function member_add_member_to_role() {
     var user = new ncmb.User({userName:"goldUser", password:"pass"});
     user.signUpByAccount().then(function(user){
-    //既存のロールを検索
-    ncmb.Role.equalTo("roleName","goldPlan").fetch().then(function (role){
-        if (JSON.stringify(role) === "{}") {
-        //ロールが存在しない場合
-        } else {
-        //会員をロールに追加
-        role.addUser(user).update().then(function (role){
-            //成功した場合の処理
-            alert(JSON.stringify(role));
-        }).catch(function(err) {
-            //失敗した場合の処理
+        //既存のロールを検索
+        ncmb.Role.equalTo("roleName","goldPlan").fetch().then(function (role){
+            //会員をロールに追加
+            role.addUser(user).update().then(function (role){
+                //成功した場合の処理
+                alert(JSON.stringify(role));
+            }).catch(function(err) {
+                //失敗した場合の処理
+                alert(JSON.stringify(err));
+            });
+        }).catch(function (err){
+            //検索に失敗した場合
             alert(JSON.stringify(err));
         });
-        }
-    }).catch(function (err){
-        //検索に失敗した場合
-        alert(JSON.stringify(err));
-    });
     }).catch(function(err) {
-    //会員登録に失敗した場合の処理
-    alert(JSON.stringify(err));
+        //会員登録に失敗した場合の処理
+        alert(JSON.stringify(err));
     });
 }
 function member_add_child_role() {
     var subRole = new ncmb.Role("subRole").save().then(function (sub) {
-    ncmb.Role.equalTo("roleName","goldPlan").fetch().then(function (role){
-        if (JSON.stringify(role) === "{}") {
-        //ロールが存在しない場合
-        } else {
-        //子ロールを追加
-        role.addRole(sub).update().then(function (role){
-            //成功した場合の処理
-            alert(JSON.stringify(role));
-        }).catch(function(err) {
-            //失敗した場合の処理
+        ncmb.Role.equalTo("roleName","goldPlan").fetch().then(function (role){
+            //子ロールを追加
+            role.addRole(sub).update().then(function (role){
+                //成功した場合の処理
+                alert(JSON.stringify(role));
+            }).catch(function(err) {
+                //失敗した場合の処理
+                alert(JSON.stringify(err));
+            });
+            
+        }).catch(function (err){
+            //ロールの検索に失敗した場合の処理
             alert(JSON.stringify(err));
         });
-        }
-    }).catch(function (err){
-        //ロールの検索に失敗した場合の処理
-        alert(JSON.stringify(err));
-    });
     }).catch(function(err) {
-    //子ロールの保存に失敗した場合の処理
-    alert(JSON.stringify(err));
+        //子ロールの保存に失敗した場合の処理
+        alert(JSON.stringify(err));
     });
 }
 function member_member_child_role_acquisition() {
-    ncmb.Role.fetch()
+    ncmb.Role.equalTo("roleName","goldPlan").fetch()
          .then(function(role){
-           return role.fetchUser();
+           return role.fetchRole();
           })
-         .then(function(users){
-            for (var i = 0; i < users.length; i++) {
-              var user = users[i];
-              console.log(user.userName);
+         .then(function(roles){
+            for (var i = 0; i < roles.length; i++) {
+              var role = roles[i];
+              console.log(role.roleName);              
             }
-            alert(JSON.stringify(users));
+            alert(JSON.stringify(roles));
           })
          .catch(function(err){
             // エラー処理
@@ -245,9 +263,26 @@ function data_store_object_storage() {
     var GameScore = ncmb.DataStore("GameScore");
     var gameScore = new GameScore();
 
+    // First user the  playerName: Taro
     gameScore.set("score", 1337)
             .set("playerName", "Taro")
             .set("cheatMode", false)
+            .set("arrayKey",[1,2,3]) // added here 
+            .save()
+            .then(function(gameScore){
+            // 保存後の処理
+                alert(JSON.stringify(gameScore));
+            })
+            .catch(function(err){
+            // エラー処理
+                alert(JSON.stringify(err));
+            });
+    // Seconds user the playerName: Jimmy
+    var gameScore2 = new GameScore();
+    gameScore2.set("score", 1221)
+            .set("playerName", "Jimmy")
+            .set("cheatMode", false)
+            .set("arrayKey",[1,3]) // added here 
             .save()
             .then(function(gameScore){
             // 保存後の処理
@@ -277,8 +312,10 @@ function data_store_update_object() {
     var GameScore = ncmb.DataStore("GameScore");
     var gameScore = new GameScore();
 
-    gameScore.set("score", 1337)
+    gameScore.set("score", 1010)
+         .set("playerName", "UpdatePlayer")
          .set("cheatMode", false)
+         .set("arrayKey" ,[2,3]) // Add it here. 
          .save() // gameScoreオブジェクトを保存
          .then(function(gameScore){
            gameScore.set("cheatMode", true);
@@ -380,7 +417,7 @@ function data_store_using_basic_search() {
 function data_store_basic_query_operator() {
     var GameScore = ncmb.DataStore("GameScore");
     // notEqualTo("playerName", "Taro")
-    GameScore.notEqualTo("playerName", "Taro")
+    GameScore.notEqualTo("score", 1337)
          .order("score",true)
          .fetchAll()
          .then(function(results){
@@ -496,7 +533,7 @@ function data_store_specify_the_number_of_acquisition() {
     var bigCity = City.greaterThan("population", 1000000);
 
     Team.select("hometown", "cityname", bigCity)
-         .limit(10)
+         .limit(3)
          .fetchAll()
          .then(function(results){
             for (var i = 0; i < results.length; i++) {
@@ -516,7 +553,7 @@ function data_store_specifying_the_acquisition_start_position() {
     var bigCity = City.greaterThan("population", 1000000);
 
     Team.select("hometown", "cityname", bigCity)
-         .skip(10)
+         .skip(2)
          .fetchAll()
          .then(function(results){
             for (var i = 0; i < results.length; i++) {
@@ -536,7 +573,7 @@ function data_store_sort_search_results() {
     var bigCity = City.greaterThan("population", 1000000);
 
     Team.select("hometown", "cityname", bigCity)
-         .order("score", true)
+         .order("id", true)
          .fetchAll()
          .then(function(results){
             for (var i = 0; i < results.length; i++) {
@@ -569,13 +606,31 @@ function data_store_save_score() {
     //スコアの保存
     var ScoreClass = ncmb.DataStore("HighScore");
     var score = new ScoreClass();
-    score.set("name", name);
-    score.set("score", 0);
+    score.set("name", "Taro");
+    score.set("score", 10);
     score.save()
         .then(function (data){
             //保存成功時の処理
             alert(JSON.stringify(data));
         })
+        .catch(function (error){
+            //失敗時の処理
+            alert(JSON.stringify(error));
+        });
+    // Second record
+    var score = new ScoreClass();
+    score.set("name", "Jimmy");
+    score.set("score", 20);
+    score.save()
+        .catch(function (error){
+            //失敗時の処理
+            alert(JSON.stringify(error));
+        });
+    // Third record
+    var score = new ScoreClass();
+    score.set("name", "Tanaka");
+    score.set("score", 30);
+    score.save()
         .catch(function (error){
             //失敗時の処理
             alert(JSON.stringify(error));
@@ -599,7 +654,8 @@ function data_store_get_ranking() {
 // Access authority setting
 function data_store_set_acl_on_the_app_side() {
     var acl = new ncmb.Acl();
-    acl.setRoleReadAccess("Private", true) // Privateロールの読み込みを許可
+    // set this record can be access by user in goldPlan
+    acl.setRoleReadAccess("goldPlan", true) // goldPlanロールの読み込みを許可
    .setPublicReadAccess(false); // 全体の読み込みを拒否
 
     var Note = ncmb.DataStore("Note");
@@ -610,6 +666,54 @@ function data_store_set_acl_on_the_app_side() {
     privateNote.set("acl", acl);
     privateNote.save();
     alert('Done.')
+}
+function data_store_gold_user_access() {
+    ncmb.User.login("goldUser", "pass")
+        .then(function(data){
+            // Fetch Note class after login successfully.
+            var Note = ncmb.DataStore("Note");
+            Note.fetchAll()
+            .then(function(results){
+                // Expected: one records will be response.
+                for(var i=0; i< results.length; i++) {
+                    console.log(results[i]);
+                }
+                alert(JSON.stringify(results));
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        })
+        .catch(function(err){
+        // エラー処理
+        alert("Error: " + JSON.stringify(err));
+        });
+        // Logout after done.
+        ncmb.User.logout();
+}
+function data_store_other_user_access() {
+    ncmb.User.login(_UserName, _UserPassword)
+        .then(function(data){
+            // Fetch Note class after login successfully.
+            var Note = ncmb.DataStore("Note");
+            Note.fetchAll()
+            .then(function(results){
+                // Expected: zero records will be response.
+                for(var i=0; i< results.length; i++) {
+                    console.log(results[i]);
+                }
+                alert(JSON.stringify(results));
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        })
+        .catch(function(err){
+        // エラー処理
+        alert("Error: " + JSON.stringify(err));
+        });
+        // Logout after done.
+        ncmb.User.logout();
 }
 /**
  * End data store

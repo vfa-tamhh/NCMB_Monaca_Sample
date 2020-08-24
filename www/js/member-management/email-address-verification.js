@@ -3,11 +3,11 @@ $(function(){
     closeButton('../member-management/');
 });
 $(document).on('click', '#btn-member-registration-by-email-address', function(){
-    var email = '';
-    member_email_registration(email);
+    // var email = '';
+    member_email_registration();
 });
 $(document).on('click', '#btn-login-with-email-address', function(){
-    var email = '';
-    var password = '';
-    member_login_with_email(email, password);
+    // var email = '';
+    // var password = '';
+    member_login_with_email();
 });
