@@ -232,7 +232,15 @@ var firebaseConfig = {
 ### File store
 
 - Upload `data/file-store/abc.txt` and `data/file-store/mBaaS_image.png` into your mbaas console.
+- Upload: `Filestore/Upload`
+<img src='/readme_images/file_001.png'/>
 
+- Select `mBaaS_image.png` and public link as image below:
+<img src='/readme_images/file_002.png'/>
+<img src='/readme_images/file_003.png'/>
+
+- Copy below link into `js/service.js` `img_url`
+<img src='/readme_images/file_004.png'/>
 
 ## License
 
