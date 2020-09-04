@@ -20,8 +20,3 @@ $(document).on('click', '#btn-logout-user', function(){
 $(document).on('click', '#btn-confirm-email-user', function(){
     member_confirm_email();
 });
-// please change your email address
-$(document).on('click', '#btn-password-reset-user', function(){
-    // var email = 'mail@example.com';
-    member_password_reset();
-});

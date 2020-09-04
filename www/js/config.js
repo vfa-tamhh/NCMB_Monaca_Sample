@@ -133,7 +133,7 @@ const member_management = [
     {
         id: "",
         ja_name: "基本的な使い方",
-        en_name: "Basic usage",
+        en_name: "Username Registration",
         template: "basic-usage.html",
         operation: [
             {
@@ -165,22 +165,19 @@ const member_management = [
                 id: "btn-confirm-email-user",
                 ja_name: "メールアドレス確認の有無",
                 en_name: "Confirmation of e-mail address"
-            },
-             {
-                id: "btn-password-reset-user",
-                ja_name: "パスワードのリセット",
-                en_name: "Password reset"
-            },
+            }
         ]
     },
     {
         id: "",
         ja_name: "メールアドレス認証",
-        en_name: "Email address verification",
+        en_name: "Email address Registration",
         template: "email-address-verification.html",
         operation: [
             {id: "btn-member-registration-by-email-address", ja_name: "メールアドレスによる会員登録", en_name: "Member registration by email address"},
-            {id: "btn-login-with-email-address", ja_name: "メールアドレスでのログイン", en_name: "Login with email address"}
+            {id: "btn-login-with-email-address", ja_name: "メールアドレスでのログイン", en_name: "Login with email address"},
+            {id: "btn-confirm-email-user", ja_name: "メールアドレス確認の有無", en_name: "Confirmation of e-mail address"},
+            {id: "btn-password-reset-user", ja_name: "パスワードのリセット",en_name: "Password reset"}
         ]
     },
     {
