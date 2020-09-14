@@ -153,6 +153,12 @@ This project support push notification for Android and iOS.
 - Config on NCMB console side.
 - Change your bundle ID.
 
+* Note:
+Please prepare data as below before execute test:
+  Create a new pushnotification with target is [android] and [Delivery Time] is a next day (this is setting push status is 0)
+  Sample: current day is: [2020/09/14] please set [Delivery Time] is [2020/09/15]
+  <img src='/readme_images/00011.png' title='Import 4' />
+
 ### SNS Cooperation
 
 1. Facebook integration: (Android)

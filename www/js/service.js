@@ -724,7 +724,7 @@ function data_store_other_user_access() {
  * Begin Push notification
  */
 function push_search_for_push_notifications() {
-    ncmb.Push.equalTo("target","ios")
+    ncmb.Push.equalTo("target","android")
     .fetchAll()
     .then(function(pushs){
        for (var i = 0; i < pushs.length; i++) {
@@ -738,46 +738,48 @@ function push_search_for_push_notifications() {
      });
 }
 function push_update_push_notifications() {
-    ncmb.Push.equalTo("target","android")
+    ncmb.Push.equalTo("status", 0)
     .fetchAll()
     .then(function(pushs){
        for (var i = 0; i < pushs.length; i++) {
-         console.log(pushs[i].message);
-         pushs[i].set("target",  ["ios"]);
-         pushs[i].update() // 更新
-            .then(function(push){
-                alert(JSON.stringify(push));
+            if (!isForIos(pushs[i].target)) {
+                delete pushs[i].badgeIncrementFlag;
+            }
+            pushs[i].set("message",  "This is update content.");
+            pushs[i].update() // 更新
+                .then(function(push){
+                    alert(JSON.stringify(push));
             })
             .catch(function(err){
                 alert(JSON.stringify(err));
             });
        }
-       
      })
     .catch(function(err){
        // エラー処理
        alert(JSON.stringify(err));
      });
 }
+// Check is target for iOS
+function isForIos(target) {
+    return target !== null && target.some(function(target) {
+        return target === 'ios';
+    });
+}
 function push_delete_push_notifications() {
-    ncmb.Push.equalTo("target","android")
+    ncmb.Push.equalTo("status", 0)
     .fetchAll()
     .then(function(pushs){
        for (var i = 0; i < pushs.length; i++) {
-         console.log(pushs[i].message);
-         pushs[i].set("target",  ["ios"]);
-         pushs[i].update() // 更新
-            .then(function(push){
-                return push.delete(); // 削除
-            }).then(function(){
-                // 削除後処理
-                alert('deleted successfully.');
+           var deletePush = pushs[i];
+            deletePush.delete()
+                .then(function(){
+                    alert('PushID: ' + deletePush.objectId + ' has been deleted.');
             })
             .catch(function(err){
                 alert(JSON.stringify(err));
             });
        }
-       
      })
     .catch(function(err){
        // エラー処理
@@ -786,21 +788,25 @@ function push_delete_push_notifications() {
 }
 // Narrowed delivery
 function push_settings_in_the_app() {
-    //JavaScript SDKのInstallationクラスを利用して端末情報を取得
-    ncmb.Installation.fetchById("object_id")
-	 .then(function(installation){
-	    //独自フィールドの設定とデータストアへの保存
-	    installation.set("region", "Asia");
-	    return installation.update();
-	  })
-	 .then(function(installation){
-	    // 更新後の処理
-        alert(JSON.stringify(installation));
-	  })
-	 .catch(function(err){
-	    // エラー処理
+    // Update all installation which have appVersion is 3.3.3
+    ncmb.Installation.equalTo("appVersion","3.3.3")
+    .fetchAll()
+    .then(function(installations){
+        console.log(installations);
+        for(var i = 0 ; i < installations.length; i++) {
+            installations[i].set("region", "Asia");
+            installations[i].update(function(res){
+                alert("Update successfully!");
+            })
+            .catch(function(err2){
+                alert(JSON.stringify(err2));
+            });
+        }
+
+    })
+    .catch(function(err){
         alert(JSON.stringify(err));
-	  });
+    });
 }
 // Rich push notification
 function push_rich_push_notification() {
