@@ -248,6 +248,76 @@ var firebaseConfig = {
 - Copy below link into `js/service.js` `img_url`
 <img src='/readme_images/file_004.png'/>
 
+### File store
+
+How to use script function?
+1. Basic usage:
+
+<img src='/readme_images/script_0000.png'/>
+
+<img src='/readme_images/script_0001.png'/>
+
+	[Script GET] button: 
+
+		1. upload file `data/script/testScript.js` to your Mbaas console.
+			Method: GET
+			File Status: Executable 
+		2. Click on [Script GET] button
+		-> Check the result. 
+
+	[Script POST] button
+
+		1. upload file `data/script/scriptPost.js` to your Mbaas console.
+			Method: POST
+			File Status: Executable
+		2. Click on [Script POST] button
+		-> Check the result.
+
+2. Sample collection:
+
+<img src='/readme_images/script_0002.png'/>
+
+<img src='/readme_images/script_0003.png'/>
+
+	[Script GET] button:
+
+		1. Open file `data/script/sample_get.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		2. Upload this file to your Mbaas console.
+			Method: GET
+			File Status: Executable
+		3. On Mbaas console. `Datastore` create a class with name is `Item`. In `Item` class, create 2 file with name `field1` and `filed2`  and create some records.
+		4. Click on [Script GET] button
+		-> Check the result.
+
+	[Script POST] button
+
+		1. Open file `data/script/sample_post.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		2. Upload this file to your Mbaas console.
+			Method: POST
+			File Status: Executable
+		3. Click on [Script POST] button
+		-> Check the result.
+
+	[Script PUT] button
+
+		1. Open file `data/script/scriptPut.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		2. Upload this file to your Mbaas console.
+			Method: PUT
+			File Status: Executable
+		3. Go to `js/service.js` at method `script_sample_put()`  please change your objectid you wanna to update data. `.query({"id": "tAT1Vrcd8kuQa1Tl"})` -> `.query({"id": "your object id"})` (ObjectId get from `Datastore/Item`)
+		4. Click on [Script PUT] button
+		-> Check the result.
+
+	[Script DELETE] button
+
+		1. Open file `data/script/sample_delete.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		2. Upload this file to your Mbaas console.
+			Method: DELETE
+			File Status: Executable
+		3. Go to `js/service.js` at method `script_sample_delete()`  please change your objectid you wanna to update data. `.query({"id": "dmkuaVTaqrx9WRLl"})` -> `.query({"id": "your object id"})` (ObjectId get from `Datastore/Item`)
+		4. Click on [Script DELETE] button
+		-> Check the result.
+
 ## License
 
     Copyright [2020] [Jimmy Huynh]

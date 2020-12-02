@@ -9,7 +9,8 @@
         "monaca-plugin-monaca-core": "3.3.0",
         "ncmb-push-monaca-plugin": "3.0.8",
         "cordova-plugin-facebook4": "file:res/custom_plugins/cordova-plugin-facebook4",
-        "cordova-plugin-sign-in-with-apple": "file:res/custom_plugins/cordova-plugin-sign-in-with-apple"
+        "cordova-plugin-sign-in-with-apple": "file:res/custom_plugins/cordova-plugin-sign-in-with-apple",
+        "cordova-plugin-androidx": "file:res/custom_plugins/cordova-plugin-androidx"
     },
     "scripts": {
         "monaca:preview": "npm run dev",
@@ -26,7 +27,8 @@
                 "APP_ID": "544769482873207",
                 "APP_NAME": "demo_login"
             },
-            "cordova-plugin-sign-in-with-apple": {}
+            "cordova-plugin-sign-in-with-apple": {},
+            "cordova-plugin-androidx": {}
         }
     },
     "devDependencies": {
