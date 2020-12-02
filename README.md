@@ -248,24 +248,25 @@ var firebaseConfig = {
 - Copy below link into `js/service.js` `img_url`
 <img src='/readme_images/file_004.png'/>
 
-### File store
+### Script
 
 How to use script function?
 1. Basic usage:
 
 <img src='/readme_images/script_0000.png'/>
 
-<img src='/readme_images/script_0001.png'/>
-
-	[Script GET] button: 
+- [Script GET] button:  
 
 		1. upload file `data/script/testScript.js` to your Mbaas console.
 			Method: GET
 			File Status: Executable 
+
+    <img src='/readme_images/script_0001.png'/>
+
 		2. Click on [Script GET] button
 		-> Check the result. 
 
-	[Script POST] button
+- [Script POST] button
 
 		1. upload file `data/script/scriptPost.js` to your Mbaas console.
 			Method: POST
@@ -277,9 +278,7 @@ How to use script function?
 
 <img src='/readme_images/script_0002.png'/>
 
-<img src='/readme_images/script_0003.png'/>
-
-	[Script GET] button:
+- [Script GET] button:
 
 		1. Open file `data/script/sample_get.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
@@ -289,7 +288,7 @@ How to use script function?
 		4. Click on [Script GET] button
 		-> Check the result.
 
-	[Script POST] button
+- [Script POST] button
 
 		1. Open file `data/script/sample_post.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
@@ -298,17 +297,20 @@ How to use script function?
 		3. Click on [Script POST] button
 		-> Check the result.
 
-	[Script PUT] button
+- [Script PUT] button
 
 		1. Open file `data/script/scriptPut.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
 			Method: PUT
 			File Status: Executable
 		3. Go to `js/service.js` at method `script_sample_put()`  please change your objectid you wanna to update data. `.query({"id": "tAT1Vrcd8kuQa1Tl"})` -> `.query({"id": "your object id"})` (ObjectId get from `Datastore/Item`)
+
+  <img src='/readme_images/script_0003.png'/>
+
 		4. Click on [Script PUT] button
 		-> Check the result.
 
-	[Script DELETE] button
+- [Script DELETE] button
 
 		1. Open file `data/script/sample_delete.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
