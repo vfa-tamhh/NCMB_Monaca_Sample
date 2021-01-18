@@ -257,7 +257,7 @@ How to use script function?
 
 - [Script GET] button:  
 
-		1. upload file `data/script/testScript.js` to your Mbaas console.
+		1. upload file `data/script/testScript_GET.js` to your Mbaas console.
 			Method: GET
 			File Status: Executable 
 
@@ -268,7 +268,7 @@ How to use script function?
 
 - [Script POST] button
 
-		1. upload file `data/script/scriptPost.js` to your Mbaas console.
+		1. upload file `data/script/testScript_POST.js` to your Mbaas console.
 			Method: POST
 			File Status: Executable
 		2. Click on [Script POST] button
@@ -290,7 +290,7 @@ How to use script function?
 
 - [Script POST] button
 
-		1. Open file `data/script/sample_post.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		1. Open file `data/script/testScript_POST.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
 			Method: POST
 			File Status: Executable
@@ -299,7 +299,7 @@ How to use script function?
 
 - [Script PUT] button
 
-		1. Open file `data/script/scriptPut.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		1. Open file `data/script/testScript_PUT.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
 			Method: PUT
 			File Status: Executable
@@ -312,13 +312,17 @@ How to use script function?
 
 - [Script DELETE] button
 
-		1. Open file `data/script/sample_delete.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
+		1. Open file `data/script/testScript_DELETE.js` change your `YOUR_APPLICATION_KEY` and `YOUR_CLIENT_KEY`.
 		2. Upload this file to your Mbaas console.
 			Method: DELETE
 			File Status: Executable
 		3. Go to `js/service.js` at method `script_sample_delete()`  please change your objectid you wanna to update data. `.query({"id": "dmkuaVTaqrx9WRLl"})` -> `.query({"id": "your object id"})` (ObjectId get from `Datastore/Item`)
 		4. Click on [Script DELETE] button
 		-> Check the result.
+
+- Check environoment: using file `data/script/main.js`
+  * nodebrewでnodeを指定する
+  * execute()内の機能をひとつずつコメントアウトを外して実行する
 
 ## License
 

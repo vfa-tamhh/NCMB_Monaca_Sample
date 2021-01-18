@@ -1263,7 +1263,7 @@ function script_get() {
     // パラメータを付与せず実行
     ncmb.Script
     //   .query({"name": "Input_Your_name"}) 
-      .exec("GET", "testScript.js")
+      .exec("GET", "testScript_GET.js")
       .then(function(res){
         // 実行後処理
         alert(JSON.stringify(res));
@@ -1277,7 +1277,7 @@ function script_post() {
     ncmb.Script
       .set({"username":"admin", "password":"123456"})
       .data({"field1":"SDK POST 1", "field2":"SDK POST 2"})
-      .exec("POST", "scriptPost.js")
+      .exec("POST", "testScript_POST.js")
       .then(function(res){
         // 実行後処理
         alert(JSON.stringify(res));
@@ -1306,7 +1306,7 @@ function script_sample_post() {
     ncmb.Script
       .set({"username":"admin", "password":"123456"})
       .data({"field1":"SDK POST 1", "field2":"SDK POST 2"})
-      .exec("POST", "sample_post.js")
+      .exec("POST", "testScript_POST.js")
       .then(function(res){
         // 実行後処理
         alert(JSON.stringify(res));
@@ -1321,7 +1321,7 @@ function script_sample_put() {
       .set({"username":"admin", "password":"123456"})
       .query({"id": "tAT1Vrcd8kuQa1Tl"})
       .data({"field1":"SDK POST 1", "field2":"SDK POST 4"})
-      .exec("PUT", "scriptPut.js")
+      .exec("PUT", "testScript_PUT.js")
       .then(function(res){
         // 実行後処理
         alert(JSON.stringify(res));
@@ -1335,7 +1335,7 @@ function script_sample_delete() {
     // メソッドチェインでクエリストリングを付与し実行
     ncmb.Script
       .query({"id": "dmkuaVTaqrx9WRLl"})      // クエリストリングを指定
-      .exec("DELETE", "sample_delete.js")
+      .exec("DELETE", "testScript_DELETE.js")
       .then(function(res){
         // 実行後処理
         console.log(res);
