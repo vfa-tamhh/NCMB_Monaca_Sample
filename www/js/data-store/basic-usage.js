@@ -12,7 +12,6 @@ $(document).on('click', '#btn-using-basic-search', function(){ data_store_using_
 $(document).on('click', '#btn-basic-query-operator', function(){ data_store_basic_query_operator(); });
 $(document).on('click', '#btn-query-on-array', function(){ data_store_query_on_array(); });
 $(document).on('click', '#btn-query-for-pointer', function(){ data_store_query_for_pointer(); });
-$(document).on('click', '#btn-query-for-relation', function(){ data_store_query_for_relation(); });
 $(document).on('click', '#btn-query-composition', function(){ data_store_query_composition(); });
 $(document).on('click', '#btn-search-using-the-result-of-subquery', function(){ data_store_search_using_the_result_of_subquery(); });
 $(document).on('click', '#btn-specify-the-number-of-acquisition', function(){ data_store_specify_the_number_of_acquisition(); });

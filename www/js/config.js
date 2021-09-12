@@ -219,7 +219,6 @@ const data_store = [
             {id: "btn-basic-query-operator", ja_name: "基本的なクエリのオペレータ", en_name: "Basic query operator"},
             {id: "btn-query-on-array", ja_name: "配列に対するクエリ", en_name: "Query on array"},
             {id: "btn-query-for-pointer", ja_name: "ポインタに対するクエリ", en_name: "Query for pointer"},
-            {id: "btn-query-for-relation", ja_name: "リレーションに対するクエリ", en_name: "Query for relation"},
             {id: "btn-query-composition", ja_name: "クエリの合成", en_name: "Query composition"},
             {id: "btn-search-using-the-result-of-subquery", ja_name: "サブクエリの結果を利用した検索", en_name: "Search using the result of subquery"},
             {id: "btn-specify-the-number-of-acquisition", ja_name: "取得件数の指定", en_name: "Specify the number of acquisition"},
@@ -246,7 +245,8 @@ const data_store = [
         operation: [
             {id: "btn-set-acl-on-the-app-side", ja_name: "アプリ側でACLを設定する", en_name: "Set ACL on the app side"},
             {id:"btn-gold-user-access", ja_name:"Gold user access", en_name:"Gold user access"},
-            {id:"btn-other-user-access", ja_name:"Other user access", en_name:"Other user access"}
+            {id:"btn-other-user-access", ja_name:"Other user access", en_name:"Other user access"},
+            {id: "btn-member-delete-data", ja_name: "delete data", en_name: "Delete data"}
         ]
     },
 ];

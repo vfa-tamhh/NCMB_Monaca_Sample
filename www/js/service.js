@@ -83,14 +83,21 @@ function member_login_2() {
 }
 function member_current_user() {
     // カレントユーザー情報の取得
-    var currentUser = ncmb.User.getCurrentUser();
-    if (currentUser) {
-        alert("currentUser: " + JSON.stringify(currentUser));
-        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
-    } else {
-        alert("User has been logout!");
-        console.log("未ログインまたは取得に失敗");
-    }
+    ncmb.User.login(_UserName, _UserPassword)
+        .then(function(data){
+            var currentUser = ncmb.User.getCurrentUser();
+            if (currentUser) {
+                alert("currentUser: " + JSON.stringify(currentUser));
+                console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+            } else {
+                alert("User has been logout!");
+                console.log("未ログインまたは取得に失敗");
+            }
+        })
+        .catch(function(err){
+        // エラー処理
+        alert("Error: " + JSON.stringify(err));
+    });
 }
 function member_logout() {
     // ログアウト
@@ -167,7 +174,7 @@ function member_create_role() {
     freePlanRole.save()
                 .then(function(role){
                 // 非同期処理
-                    alert("非同期処理: " + JSON.stringify(role));
+                    // alert("非同期処理: " + JSON.stringify(role));
                 })
                 .catch(function(err){
                 //　エラー処理
@@ -180,7 +187,7 @@ function member_create_role() {
         if (err) {
             alert("エラー処理: " + JSON.stringify(err));
         } else {
-            alert("非同期処理: " + JSON.stringify(role));
+            // alert("非同期処理: " + JSON.stringify(role));
         }
     });
 
@@ -203,7 +210,7 @@ function member_add_member_to_role() {
             //会員をロールに追加
             role.addUser(user).update().then(function (role){
                 //成功した場合の処理
-                alert(JSON.stringify(role));
+                alert('Response data: ' + JSON.stringify(role));
             }).catch(function(err) {
                 //失敗した場合の処理
                 alert(JSON.stringify(err));
@@ -223,7 +230,7 @@ function member_add_child_role() {
             //子ロールを追加
             role.addRole(sub).update().then(function (role){
                 //成功した場合の処理
-                alert(JSON.stringify(role));
+                alert('Response data: ' + JSON.stringify(role));
             }).catch(function(err) {
                 //失敗した場合の処理
                 alert(JSON.stringify(err));
@@ -248,12 +255,65 @@ function member_member_child_role_acquisition() {
               var role = roles[i];
               console.log(role.roleName);              
             }
-            alert(JSON.stringify(roles));
+            alert('Response data: ' +  JSON.stringify(roles));
           })
          .catch(function(err){
             // エラー処理
             alert(JSON.stringify(err));
           });
+}
+
+function member_member_delete_data() {
+    ncmb.Role.equalTo("roleName","goldPlan").fetch().then(function (role){
+        role.delete().then(function(){
+        }).catch(function(err2){
+            console.log(err2);
+        });
+    }).catch(function (err){
+        console.log(err);
+    });
+    ncmb.Role.equalTo("roleName","freePlan").fetch().then(function (role){
+        role.delete().then(function(){
+        }).catch(function(err2){
+            console.log(err2);
+        });
+    }).catch(function (err){
+        console.log(err);
+    });
+    ncmb.Role.equalTo("roleName","silverPlan").fetch().then(function (role){
+        role.delete().then(function(){
+        }).catch(function(err2){
+            console.log(err2);
+        });
+    }).catch(function (err){
+        console.log(err);
+    });
+    ncmb.Role.equalTo("roleName","subRole").fetch().then(function (role){
+        role.delete().then(function(){
+        }).catch(function(err2){
+            console.log(err2);
+        });
+    }).catch(function (err){
+        console.log(err);
+    });
+    // delete user
+    var user = new ncmb.User({userName:"goldUser", password:"pass"});
+    ncmb.User.login(user)
+        .then(function(data){
+            data.delete();
+            
+        })
+        .catch(function(err){
+            console.log(err);
+    });
+    ncmb.User.login(_UserName, _UserPassword)
+        .then(function(data){
+            data.delete();
+            alert('Delete ok');
+        })
+        .catch(function(err){
+            console.log(err);
+    });
 }
 /**
  * End member management
@@ -273,7 +333,8 @@ function data_store_object_storage() {
             .save()
             .then(function(gameScore){
             // 保存後の処理
-                alert(JSON.stringify(gameScore));
+                // alert('Response data: ' + JSON.stringify(gameScore));
+                console.log(gameScore);
             })
             .catch(function(err){
             // エラー処理
@@ -288,7 +349,7 @@ function data_store_object_storage() {
             .save()
             .then(function(gameScore){
             // 保存後の処理
-                alert(JSON.stringify(gameScore));
+                alert('Response data: ' + JSON.stringify(gameScore));
             })
             .catch(function(err){
             // エラー処理
@@ -303,7 +364,7 @@ function data_store_get_object() {
               var object = results[i];
               console.log(object.score + " - " + object.get("playerName"));
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -325,7 +386,7 @@ function data_store_update_object() {
          })
          .then(function(gameScore){
            // 更新後の処理
-            alert(JSON.stringify(gameScore));
+            alert('Response data: ' + JSON.stringify(gameScore));
           })
          .catch(function(err){
            // エラー処理
@@ -340,7 +401,7 @@ function data_store_delete_object() {
            gameScore.delete()
             .then(function(result){
                 console.log(result); // true
-                alert(JSON.stringify(result));
+                alert('Response data: ' + JSON.stringify(result));
             })
             .catch(function(err){
             // エラー処理
@@ -363,7 +424,7 @@ function data_store_pointer() {
     food.save()
         .then(function(food){
         // 保存後処理
-        alert(JSON.stringify(food));
+        alert('Response data: ' + JSON.stringify(food));
         })
         .catch(function(err){
         // エラー処理
@@ -390,7 +451,7 @@ function data_store_relation() {
     mainobj.save()
        .then(function(obj){
          // 保存後処理
-         alert(JSON.stringify(obj));
+         alert('Response data: ' + JSON.stringify(obj));
        })
        .catch(function(err){
          // エラー処理
@@ -409,7 +470,7 @@ function data_store_using_basic_search() {
               var object = results[i];
               console.log(object.score + " - " + object.get("playerName"));
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -428,7 +489,7 @@ function data_store_basic_query_operator() {
               var object = results[i];
               console.log(object.score + " - " + object.get("playerName"));
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -447,7 +508,7 @@ function data_store_query_on_array() {
               var object = results[i];
               console.log(object.score + " - " + object.get("playerName"));
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -466,30 +527,12 @@ function data_store_query_for_pointer() {
               var object = results[i];
               console.log(object.score + " - " + object.get("playerName"));
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
             alert(JSON.stringify(err));
           });
-}
-function data_store_query_for_relation() {
-    var RelatedObjects = ncmb.DataStore("RelatedObjects");
-
-    // baseObjectのrelatingプロパティに関連付けられているRelatedObjectクラスのオブジェクトを検索
-    RelatedObjects.relatedTo(baseObject, "relating")
-              .fetchAll()
-              .then(function(results){
-                for (var i = 0; i < results.length; i++) {
-                  var object = results[i];
-                  console.log (object.name);
-                }
-                alert(JSON.stringify(results));
-              })
-              .catch(function(err){
-                console.log(err);
-                alert(JSON.stringify(err));
-              });
 }
 function data_store_query_composition() {
     var GameScore = ncmb.DataStore("GameScore");
@@ -503,7 +546,7 @@ function data_store_query_composition() {
                 var object = results[i];
                 console.log (object.score);
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -522,7 +565,7 @@ function data_store_search_using_the_result_of_subquery() {
                 var object = results[i];
                 console.log (object.id);
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -542,7 +585,7 @@ function data_store_specify_the_number_of_acquisition() {
                 var object = results[i];
                 console.log (object.id);
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -562,7 +605,7 @@ function data_store_specifying_the_acquisition_start_position() {
                 var object = results[i];
                 console.log (object.id);
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -582,7 +625,7 @@ function data_store_sort_search_results() {
                 var object = results[i];
                 console.log (object.id);
             }
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -596,7 +639,7 @@ function data_store_acquisition_of_the_number_of_search_results() {
          .fetchAll()
          .then(function(results){
             console.log(results.count); // 検索結果の件数を表示
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             console.log(err);
@@ -613,7 +656,7 @@ function data_store_save_score() {
     score.save()
         .then(function (data){
             //保存成功時の処理
-            alert(JSON.stringify(data));
+            alert('Response data: ' + JSON.stringify(data));
         })
         .catch(function (error){
             //失敗時の処理
@@ -646,7 +689,7 @@ function data_store_get_ranking() {
          .fetchAll()
          .then(function(results){
             //ランキング取得後の処理
-            alert(JSON.stringify(results));
+            alert('Response data: ' + JSON.stringify(results));
           })
          .catch(function(err){
             //エラー時の処理
@@ -680,18 +723,18 @@ function data_store_gold_user_access() {
                 for(var i=0; i< results.length; i++) {
                     console.log(results[i]);
                 }
-                alert(JSON.stringify(results));
+                alert('Response data: ' + JSON.stringify(results));
             })
             .catch(function(err){
                 console.log(err);
             });
         })
         .catch(function(err){
-        // エラー処理
-        alert("Error: " + JSON.stringify(err));
+            // エラー処理
+            alert("Error: " + JSON.stringify(err));
         });
         // Logout after done.
-        ncmb.User.logout();
+        // ncmb.User.logout();
 }
 function data_store_other_user_access() {
     ncmb.User.login(_UserName, _UserPassword)
@@ -704,18 +747,18 @@ function data_store_other_user_access() {
                 for(var i=0; i< results.length; i++) {
                     console.log(results[i]);
                 }
-                alert(JSON.stringify(results));
+                alert('Response data: ' + JSON.stringify(results));
             })
             .catch(function(err){
                 console.log(err);
             });
         })
         .catch(function(err){
-        // エラー処理
-        alert("Error: " + JSON.stringify(err));
+            // エラー処理
+            alert("Error: " + JSON.stringify(err));
         });
         // Logout after done.
-        ncmb.User.logout();
+        // ncmb.User.logout();
 }
 /**
  * End data store
@@ -1174,7 +1217,7 @@ function file_store_file_search() {
     .fetchAll()
     .then(function(files){
       // 検索後処理
-      alert(JSON.stringify(files));
+      alert('Response data: ' + JSON.stringify(files));
      })
     .catch(function(err){
       // エラー処理
@@ -1183,11 +1226,11 @@ function file_store_file_search() {
 }
 function file_store_update_file_acl() {
     var acl = new ncmb.Acl();
-    acl.setPublicReadAccess(true);
+    acl.setPublicWriteAccess(true);
     ncmb.File.updateACL("abc.txt", acl)
     .then(function(data){
       // 更新後処理
-      alert(JSON.stringify(data));
+      alert('Response data: ' + JSON.stringify(data));
      })
     .catch(function(err){
       // エラー処理
@@ -1209,7 +1252,7 @@ function file_store_get_contents_of_file() {
     ncmb.File.download("abc.txt")
     .then(function(fileData){
       // ファイル取得後処理
-      alert(JSON.stringify(fileData));
+      alert('Response data: ' + JSON.stringify(fileData));
      })
     .catch(function(err){
       // エラー処理

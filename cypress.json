@@ -1,0 +1,11 @@
+{
+    "watchForFileChanges": false,
+    "chromeWebSecurity": false,
+    "testFiles": [
+      "**/*.{feature,features}",
+      "index.spec.js",
+      "user.spec.js",
+      "datastore.spec.js",
+      "filestore.spec.js"
+    ]
+}
